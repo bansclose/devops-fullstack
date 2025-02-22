@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: backend
-        image: your-dockerhub-username/backend:latest
+        image: scofieldtt/devops-fullstack-backend:latest
         ports:
         - containerPort: 3000

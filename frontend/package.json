@@ -3,26 +3,26 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "dev": "vite",                      // Chạy server development
-      "build": "vite build",              // Build project cho production
-      "preview": "vite preview",          // Chạy thử bản build
-      "lint": "eslint src --fix",         // Kiểm tra và sửa lỗi coding style
-      "format": "prettier --write src",   // Định dạng code
-      "test": "vitest run",               // Chạy test (nếu cần)
-      "docker:build": "docker build -t my-frontend .",  // Build Docker image
-      "docker:run": "docker run -p 3000:3000 my-frontend" // Chạy Docker container
+      "dev": "vite",                      
+      "build": "vite build",              
+      "preview": "vite preview",          
+      "lint": "eslint src --fix",         
+      "format": "prettier --write src",   
+      "test": "vitest run",            
+      "docker:build": "docker build -t Dockerfile .", 
+      "docker:run": "docker run -p 3000:3000 Dockerfile" 
     },
     "dependencies": {
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
-      "react-router-dom": "^6.8.0",  // Dùng để quản lý routing
-      "axios": "^1.3.5"              // Gọi API từ backend
+      "react-router-dom": "^6.8.0",  
+      "axios": "^1.3.5"             
     },
     "devDependencies": {
       "vite": "^4.3.0",
-      "eslint": "^8.45.0",          // Kiểm tra coding style
-      "prettier": "^2.8.8",         // Format code
-      "vitest": "^0.29.0"           // Testing framework (nếu cần)
+      "eslint": "^8.45.0",         
+      "prettier": "^2.8.8",        
+      "vitest": "^0.29.0"           
     }
   }
   
