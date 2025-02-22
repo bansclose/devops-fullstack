@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Build backend Docker image
+        working-directory: backend
+        run: |
+          docker build -t your-dockerhub-username/backend:latest .
+      
+      - name: Build frontend Docker image
+        working-directory: frontend
+        run: |
+          docker build -t your-dockerhub-username/frontend:latest .
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Push backend image
+        run: docker push your-dockerhub-username/backend:latest
+
+      - name: Push frontend image
+        run: docker push your-dockerhub-username/frontend:latest
+
+      - name: Deploy to Kubernetes
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+      - name: Set up Kubeconfig
+        run: |
+          # Ví dụ: lấy kubeconfig từ AWS EKS (cần AWS CLI và IAM phù hợp)
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+      - name: Apply Kubernetes Manifests
+        run: |
+          kubectl apply -f k8s/backend-deployment.yaml
+          kubectl apply -f k8s/backend-service.yaml
+          kubectl apply -f k8s/frontend-deployment.yaml
+          kubectl apply -f k8s/frontend-service.yaml
+          kubectl apply -f k8s/ingress.yaml
+
